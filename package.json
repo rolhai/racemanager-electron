@@ -1,0 +1,14 @@
+{
+    "name": "racemanager-electron",
+    "version": "1.0.0",
+    "description": "Race Manager with Electron",
+    "main": "main.js",
+    "scripts": {
+        "start": "electron ."
+    },
+    "author": "Roland Haidinger",
+    "license": "Apache",
+    "devDependencies": {
+        "electron": "^10.1.3"
+    }
+}
