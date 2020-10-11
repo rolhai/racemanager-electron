@@ -1,0 +1,19 @@
+<h1>List of drivers</h1>
+<ul>
+    <li>Fernando Alonso</li>
+</ul>
+
+<script>
+    const {
+        ipcRenderer
+    } = require('electron');
+    const ul = document.querySelector('ul');
+
+    ipcRenderer.on('driver:show', (event, driver) => {
+        console.log('drivers-view receives driver=' + driver);
+        const li = document.createElement('li');
+        const item = document.createTextNode(driver.firstname + ' ' + driver.lastname);
+        li.appendChild(item);
+        ul.appendChild(li);
+    })
+</script>

@@ -1,13 +1,14 @@
 {
     "name": "racemanager-electron",
     "version": "1.0.0",
-    "description": "Race Manager with Electron",
+    "description": "Race Manager (Electron application)",
     "main": "main.js",
     "scripts": {
         "start": "electron ."
     },
+    "repository": "https://github.com/rolhai/racemanager-electron",
     "author": "Roland Haidinger",
-    "license": "Apache",
+    "license": "Apache 2.0",
     "devDependencies": {
         "electron": "^10.1.3"
     }

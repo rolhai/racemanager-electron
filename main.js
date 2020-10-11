@@ -1,13 +1,15 @@
 // Modules to control application life and create native browser window
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow, Menu, ipcMain } = require('electron')
 const path = require('path')
+let mainWindow;
 
 function createWindow() {
     // Create the browser window.
-    const mainWindow = new BrowserWindow({
-        width: 800,
-        height: 600,
+    mainWindow = new BrowserWindow({
+        width: 1280,
+        height: 1024,
         webPreferences: {
+            nodeIntegration: true,
             preload: path.join(__dirname, 'preload.js')
         }
     })
@@ -15,8 +17,17 @@ function createWindow() {
     // and load the index.html of the app.
     mainWindow.loadFile('index.html')
 
+    // close all windows, when main-windows is closed
+    mainWindow.on('closed', function() {
+        app.quit();
+    })
+
     // Open the DevTools.
     // mainWindow.webContents.openDevTools()
+
+    // create menu
+    const mainMenu = Menu.buildFromTemplate(mainMenuTemplate);
+    Menu.setApplicationMenu(mainMenu);
 }
 
 // This method will be called when Electron has finished
@@ -39,5 +50,79 @@ app.on('window-all-closed', function() {
     if (process.platform !== 'darwin') app.quit()
 })
 
+ipcMain.on('driver:add', (event, driver) => {
+    console.log('main receives driver=' + driver);
+    mainWindow.loadFile('views/drivers.html');
+    console.log('main sends driver=' + driver);
+    mainWindow.webContents.send('driver:show', driver);
+});
+
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
+
+// create menu
+const mainMenuTemplate = [{
+        label: 'App',
+        submenu: [{
+                label: 'Main',
+                click() {
+                    mainWindow.loadFile('index.html')
+                }
+            },
+            {
+                label: 'Quit',
+                accelerator: process.platform == 'darwin' ? 'Command+Q' : 'Ctrl+Q',
+                click() {
+                    app.quit();
+                }
+            }
+        ]
+    },
+    {
+        label: 'Overview',
+        submenu: [{
+            label: 'Show Teams',
+            click() {
+                mainWindow.loadFile('views/drivers.html')
+            }
+        }]
+    },
+    {
+        label: 'Master data',
+        submenu: [{
+                label: 'Add Track',
+                click() {
+                    mainWindow.loadFile('views/track.html')
+                }
+            },
+            {
+                label: 'Add Driver',
+                click() {
+                    mainWindow.loadFile('views/driver.html')
+                }
+            },
+            {
+                label: 'Add Team',
+                click() {
+                    mainWindow.loadFile('views/team.html')
+                }
+            }
+        ]
+    }
+]
+
+if (process.env.NODE_ENV != 'production') {
+    mainMenuTemplate.push({
+        label: 'Dev Tools',
+        submenu: [{
+                label: 'Toggle dev tools',
+                click(item, focusedWindow) {
+                    focusedWindow.toggleDevTools();
+                }
+            },
+            {
+                role: 'reload'
+            }
+        ]
+    });
+}
