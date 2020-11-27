@@ -4,10 +4,10 @@
     "description": "Race Manager App",
     "main": "main.js",
     "scripts": {
-        "start": "electron .",
-        "package-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=assets/icons/mac/icon.icns --prune=true --out=release-builds",
-        "package-win": "electron-packager . racemanager-electron --overwrite --asar --platform=win32 --arch=ia32 --icon=assets/icons/win/icon.ico --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"Race Manager App\"",
-        "package-linux": "electron-packager . racemanager-electron --overwrite --asar --platform=linux --arch=x64 --icon=assets/icons/png/icon.png --prune=true --out=release-builds"
+        "start": "electron src/app/main.js",
+        "package-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=src/client/assets/icons/mac/icon.icns --prune=true --out=build",
+        "package-win": "electron-packager . racemanager-electron --overwrite --asar --platform=win32 --arch=ia32 --icon=src/client/assets/icons/win/icon.ico --prune=true --out=build --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"Race Manager App\"",
+        "package-linux": "electron-packager . racemanager-electron --overwrite --asar --platform=linux --arch=x64 --icon=src/client/assets/icons/png/icon.png --prune=true --out=build"
     },
     "repository": "https://github.com/rolhai/racemanager-electron",
     "author": "Roland Haidinger",

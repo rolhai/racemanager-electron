@@ -4,7 +4,7 @@ const path = require('path')
 let mainWindow;
 
 // SET Environment
-process.env.NODE_ENV = 'production';
+//process.env.NODE_ENV = 'production';
 
 function createWindow() {
     // Create the browser window.
