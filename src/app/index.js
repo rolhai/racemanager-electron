@@ -54,10 +54,8 @@ app.on('window-all-closed', function() {
 })
 
 ipcMain.on('driver:add', (event, driver) => {
-    console.log('main receives driver=' + driver);
-    mainWindow.loadFile('views/drivers.html');
-    console.log('main sends driver=' + driver);
-    mainWindow.webContents.send('driver:show', driver);
+    console.log('main received add driver=' + driver);
+    mainWindow.loadFile('views/driversView.html');
 });
 
 // In this file you can include the rest of your app's specific main process
@@ -86,7 +84,7 @@ const mainMenuTemplate = [{
         submenu: [{
             label: 'Show Teams',
             click() {
-                mainWindow.loadFile('views/drivers.html')
+                mainWindow.loadFile('views/driversView.html')
             }
         }]
     },
@@ -95,19 +93,19 @@ const mainMenuTemplate = [{
         submenu: [{
                 label: 'Add Track',
                 click() {
-                    mainWindow.loadFile('views/track.html')
+                    mainWindow.loadFile('views/trackView.html')
                 }
             },
             {
                 label: 'Add Driver',
                 click() {
-                    mainWindow.loadFile('views/driver.html')
+                    mainWindow.loadFile('views/driverView.html')
                 }
             },
             {
                 label: 'Add Team',
                 click() {
-                    mainWindow.loadFile('views/team.html')
+                    mainWindow.loadFile('views/teamView.html')
                 }
             }
         ]
