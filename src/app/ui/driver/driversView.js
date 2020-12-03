@@ -1,5 +1,6 @@
 const { app } = require('electron');
-const DriverRepository = require('../repo/driverRepository');
+const log = require('electron-log');
+const DriverRepository = require('../../repo/driverRepository');
 
 function initView() {
     console.log("DriversView.initView")
@@ -8,7 +9,7 @@ function initView() {
 }
 
 function createDriverList() {
-    console.log('DriversView.createDriverList');
+    log.info('DriversView.createDriverList');
     this.drivers = driverRepository.get();
     console.log(this.drivers)
     for (var driver of this.drivers) {

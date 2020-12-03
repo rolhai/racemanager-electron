@@ -1,7 +1,10 @@
 const { ipcRenderer } = require('electron');
+const log = require('electron-log');
+const eventType = require('../event/eventType');
+const eventView = require('../event/eventView');
 
 function initView() {
-    console.log("DriverView.initView");
+    log.info("DriverView.initView");
     const driverForm = document.querySelector('#driverForm');
     driverForm.addEventListener('submit', submitDriverForm);
 }
@@ -14,5 +17,6 @@ function submitDriverForm(e) {
     driver.firstname = firstname;
     driver.lastname = lastname;
     var message = JSON.stringify(driver);
-    ipcRenderer.send('driver:add', message);
+    log.info("send " + message + " to " + eventType.SHOW_VIEW);
+    ipcRenderer.send(eventType.SHOW_VIEW, eventView.DRIVERS, message);
 }

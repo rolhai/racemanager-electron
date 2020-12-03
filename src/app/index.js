@@ -1,6 +1,10 @@
 // Modules to control application life and create native browser window
 const { app, BrowserWindow, Menu, ipcMain } = require('electron')
 const path = require('path')
+const log = require('electron-log');
+const EventType = require('./ui/event/eventType');
+const EventView = require('./ui/event/eventView');
+
 let mainWindow;
 
 // SET Environment
@@ -18,15 +22,12 @@ function createWindow() {
     })
 
     // and load the index.html of the app.
-    mainWindow.loadFile('index.html')
+    showView(EventView.MAIN);
 
     // close all windows, when main-windows is closed
     mainWindow.on('closed', function() {
         app.quit();
     })
-
-    // Open the DevTools.
-    // mainWindow.webContents.openDevTools()
 
     // create menu
     const mainMenu = Menu.buildFromTemplate(mainMenuTemplate);
@@ -53,10 +54,14 @@ app.on('window-all-closed', function() {
     if (process.platform !== 'darwin') app.quit()
 })
 
-ipcMain.on('driver:add', (event, driver) => {
-    console.log('main received add driver=' + driver);
-    mainWindow.loadFile('views/driversView.html');
+ipcMain.on(EventType.SHOW_VIEW, (event, eventView, message) => {
+    log.info('main-process received event, show eventView=' + eventView + ", message=" + message);
+    showView(eventView);
 });
+
+function showView(eventView) {
+    mainWindow.loadFile(eventView);
+}
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
@@ -67,7 +72,7 @@ const mainMenuTemplate = [{
         submenu: [{
                 label: 'Main',
                 click() {
-                    mainWindow.loadFile('index.html')
+                    showView(EventView.MAIN);
                 }
             },
             {
@@ -82,9 +87,9 @@ const mainMenuTemplate = [{
     {
         label: 'Overview',
         submenu: [{
-            label: 'Show Teams',
+            label: 'Show Drivers',
             click() {
-                mainWindow.loadFile('views/driversView.html')
+                showView(EventView.DRIVERS);
             }
         }]
     },
@@ -93,19 +98,19 @@ const mainMenuTemplate = [{
         submenu: [{
                 label: 'Add Track',
                 click() {
-                    mainWindow.loadFile('views/trackView.html')
+                    showView(EventView.TRACK);
                 }
             },
             {
                 label: 'Add Driver',
                 click() {
-                    mainWindow.loadFile('views/driverView.html')
+                    showView(EventView.DRIVER);
                 }
             },
             {
                 label: 'Add Team',
                 click() {
-                    mainWindow.loadFile('views/teamView.html')
+                    showView(EventView.TEAM);
                 }
             }
         ]
