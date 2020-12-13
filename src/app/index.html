@@ -10,11 +10,31 @@
 </head>
 
 <body>
-    <h1>Race Manager Application</h1>
-    We are using Node.js <span id="node-version"></span>, Chromium <span id="chrome-version"></span>, and Electron <span id="electron-version"></span>.
+    <header>
+        <h1>Race Manager Application</h1>
+    </header>
+
+    <nav>
+        <a href="/">Main</a>
+        <a href="/drivers">all drivers</a>
+        <a href="/driver">the driver</a>
+    </nav>
+
+    <main id="outlet">
+    </main>
+
+    <footer id="footer">
+        <div>
+            <ul>
+                <li>Node.js <span id="node-version"></span>, Chromium <span id="chrome-version"></span>, and Electron <span id="electron-version"></span>.</li>
+                <li>Made by RolHai</li>
+            </ul>
+        </div>
+    </footer>
 
     <!-- You can also require other files to run in this process -->
     <script src="./renderer.js"></script>
+    <script type="module" src="./router.js"></script>
 </body>
 
 </html>
