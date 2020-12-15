@@ -6,29 +6,30 @@
     <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
     <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+    <link rel="stylesheet" href="style.css">
     <title>Race Manager App</title>
 </head>
 
 <body>
     <header>
-        <h1>Race Manager Application</h1>
+        <h1>Race Manager</h1>
     </header>
 
-    <nav>
-        <a href="/">Main</a>
-        <a href="/drivers">all drivers</a>
-        <a href="/driver">the driver</a>
-    </nav>
+    <sidebar>
+        <nav>
+            <a href="/">Main</a>
+            <a href="/drivers">all drivers</a>
+            <a href="/driver">the driver</a>
+        </nav>
+    </sidebar>
 
     <main id="outlet">
     </main>
 
     <footer id="footer">
         <div>
-            <ul>
-                <li>Node.js <span id="node-version"></span>, Chromium <span id="chrome-version"></span>, and Electron <span id="electron-version"></span>.</li>
-                <li>Made by RolHai</li>
-            </ul>
+            <div>Node.js <span id="node-version"></span>, Chromium <span id="chrome-version"></span>, and Electron <span id="electron-version"></span>.</div>
+            <div>Made by RolHai</div>
         </div>
     </footer>
 
