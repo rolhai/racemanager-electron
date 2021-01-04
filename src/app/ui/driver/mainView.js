@@ -1,4 +1,4 @@
-class MainComp extends HTMLElement {
+class MainView extends HTMLElement {
 
     connectedCallback() {
         this.innerHTML = `
@@ -6,4 +6,4 @@ class MainComp extends HTMLElement {
         `;
     }
 }
-customElements.define('main-comp', MainComp);
+customElements.define('main-view', MainView);

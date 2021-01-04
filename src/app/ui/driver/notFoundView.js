@@ -1,4 +1,4 @@
-class NotFoundComp extends HTMLElement {
+class NotFoundView extends HTMLElement {
     // We are using `route` property, which is defined by the router
     connectedCallback() {
         this.innerHTML = `
@@ -6,4 +6,4 @@ class NotFoundComp extends HTMLElement {
 		`;
     }
 }
-customElements.define('not-found-comp', NotFoundComp);
+customElements.define('not-found-view', NotFoundView);

@@ -1,7 +1,6 @@
-const { ipcRenderer } = require('electron');
 const log = require('electron-log');
 
-class DriverComp extends HTMLElement {
+class EditDriverView extends HTMLElement {
 
     connectedCallback() {
         this.innerHTML = `
@@ -12,24 +11,15 @@ class DriverComp extends HTMLElement {
                     <input type="text" id="firstname" autofocus>
                 </div>
                 <div>
-                    <label>First name:</label>
+                    <label>Last name:</label>
                     <input type="text" id="lastname">
                 </div>
                 <button type="submit">Save driver</button>
             </form>
-            <script>
-                initView();
-            </script>
         `;
         log.info("DriverView.connectedCallback");
         const driverForm = document.querySelector('#driverForm');
         driverForm.addEventListener('submit', this.submitDriverForm);
-    }
-
-    initView() {
-        log.info("DriverView.initView");
-        const driverForm = document.querySelector('#driverForm');
-        driverForm.addEventListener('submit', submitDriverForm);
     }
 
     submitDriverForm(e) {
@@ -44,4 +34,4 @@ class DriverComp extends HTMLElement {
         log.info("save " + message);
     }
 }
-customElements.define('driver-comp', DriverComp);
+customElements.define('edit-driver-view', EditDriverView);

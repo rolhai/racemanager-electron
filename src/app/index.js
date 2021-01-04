@@ -2,8 +2,6 @@
 const { app, BrowserWindow, Menu, ipcMain } = require('electron')
 const path = require('path')
 const log = require('electron-log');
-const EventType = require('./ui/event/eventType');
-const EventView = require('./ui/event/eventView');
 
 let mainWindow;
 
@@ -22,7 +20,7 @@ function createWindow() {
     })
 
     // and load the index.html of the app.
-    showView(EventView.MAIN);
+    showView();
 
     // close all windows, when main-windows is closed
     mainWindow.on('closed', function() {
@@ -54,13 +52,8 @@ app.on('window-all-closed', function() {
     if (process.platform !== 'darwin') app.quit()
 })
 
-ipcMain.on(EventType.SHOW_VIEW, (event, eventView, message) => {
-    log.info('main-process received event, show eventView=' + eventView + ", message=" + message);
-    showView(eventView);
-});
-
-function showView(eventView) {
-    mainWindow.loadFile(eventView);
+function showView() {
+    mainWindow.loadFile('index.html');
 }
 
 // In this file you can include the rest of your app's specific main process
@@ -68,54 +61,22 @@ function showView(eventView) {
 
 // create menu
 const mainMenuTemplate = [{
-        label: 'App',
-        submenu: [{
-                label: 'Main',
-                click() {
-                    showView(EventView.MAIN);
-                }
-            },
-            {
-                label: 'Quit',
-                accelerator: process.platform == 'darwin' ? 'Command+Q' : 'Ctrl+Q',
-                click() {
-                    app.quit();
-                }
-            }
-        ]
-    },
-    {
-        label: 'Overview',
-        submenu: [{
-            label: 'Show Drivers',
+    label: 'App',
+    submenu: [{
+            label: 'Main',
             click() {
-                showView(EventView.DRIVERS);
+                showView();
             }
-        }]
-    },
-    {
-        label: 'Master data',
-        submenu: [{
-                label: 'Add Track',
-                click() {
-                    showView(EventView.TRACK);
-                }
-            },
-            {
-                label: 'Add Driver',
-                click() {
-                    showView(EventView.DRIVER);
-                }
-            },
-            {
-                label: 'Add Team',
-                click() {
-                    showView(EventView.TEAM);
-                }
+        },
+        {
+            label: 'Quit',
+            accelerator: process.platform == 'darwin' ? 'Command+Q' : 'Ctrl+Q',
+            click() {
+                app.quit();
             }
-        ]
-    }
-]
+        }
+    ]
+}]
 
 if (process.env.NODE_ENV != 'production') {
     mainMenuTemplate.push({

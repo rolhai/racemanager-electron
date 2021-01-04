@@ -1,22 +1,38 @@
-const { app } = require('electron');
 const log = require('electron-log');
-const DriverRepository = require('../../repo/driverRepository');
 
-function initView() {
-    console.log("DriversView.initView")
-    this.driverRepository = new DriverRepository("drivers");
-    createDriverList();
-}
+class DriversView extends HTMLElement {
 
-function createDriverList() {
-    log.info('DriversView.createDriverList');
-    this.drivers = driverRepository.get();
-    console.log(this.drivers)
-    for (var driver of this.drivers) {
-        const list = document.querySelector('#driverList');
-        const listItem = document.createElement('li');
-        const item = document.createTextNode(driver.firstname + ' ' + driver.lastname);
-        listItem.appendChild(item);
-        driverList.appendChild(listItem);
+    connectedCallback() {
+        this.innerHTML = `
+            <h1>Drivers Page</h1>
+            <br>
+            <h2>List of drivers
+            <ul id="driversList">
+            </ul>
+        `;
+        log.info("DriversView.connectedCallback");
+        this.createDriverList();
+    }
+
+    createDriverList() {
+        log.info('DriversView.createDriverList');
+
+        // load drivers
+        this.drivers = this.getDrivers();
+        console.log(this.drivers)
+
+        // show drivers drivers in list
+        for (var driver of this.drivers) {
+            const driversList = document.querySelector('#driversList');
+            const listItem = document.createElement('li');
+            const driverItem = document.createTextNode(driver.firstname + ' ' + driver.lastname);
+            listItem.appendChild(driverItem);
+            driversList.appendChild(listItem);
+        }
+    }
+
+    getDrivers() {
+        return JSON.parse('[{"firstname":"Michael","lastname":"Schumacher"}, {"firstname":"Damon","lastname":"Hill"}]');
     }
 }
+customElements.define('drivers-view', DriversView);
